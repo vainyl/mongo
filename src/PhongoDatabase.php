@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Vainyl\Mongo;
 
 use MongoDB\Database;
-use Vainyl\Connection\ConnectionInterface;
+use MongoDB\Driver\Manager as MongoDBDriverManager;
 use Vainyl\Database\CursorInterface;
 use Vainyl\Database\DatabaseInterface;
 
@@ -24,20 +24,18 @@ use Vainyl\Database\DatabaseInterface;
  */
 class PhongoDatabase extends Database implements DatabaseInterface
 {
-    private $name;
-
     private $connection;
 
     /**
      * MongoDatabase constructor.
      *
      * @param string $name
-     * @param ConnectionInterface $connection
+     * @param PhongoConnection $connection
      */
-    public function __construct(string $name, ConnectionInterface $connection)
+    public function __construct(string $name, PhongoConnection $connection, MongoDBDriverManager $manager)
     {
-        $this->name = $name;
         $this->connection = $connection;
+        parent::__construct($manager, $name);
     }
 
     /**
@@ -53,7 +51,7 @@ class PhongoDatabase extends Database implements DatabaseInterface
      */
     public function getName(): string
     {
-        return $this->name;
+        return $this->getDatabaseName();
     }
 
     /**
@@ -143,6 +141,15 @@ class PhongoDatabase extends Database implements DatabaseInterface
     {
         return $this->connection->establish()->withOptions($options);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function selectGridFSBucket(array $options = [])
+    {
+        return $this->connection->establish()->selectGridFSBucket($options);
+    }
+
 
     /**
      * @inheritDoc
