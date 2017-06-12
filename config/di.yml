@@ -1,0 +1,6 @@
+services:
+  connection.factory.pdo:
+    class: Vainyl\Mongo\Factory\PhongoConnectionFactory
+  database.factory.pdo:
+    class: Vainyl\Mongo\Factory\PhongoDatabaseFactory
+    arguments: ['@connection.storage']
