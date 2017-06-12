@@ -18,6 +18,9 @@
         "vainyl/database": "0.1.x-dev",
         "vainyl/time": "0.1.x-dev"
     },
+    "provide": {
+        "ext-mongo": "1.6.14"
+    },
     "repositories": [
         {
             "type": "composer",
