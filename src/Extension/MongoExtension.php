@@ -12,14 +12,14 @@ declare(strict_types = 1);
 
 namespace Vainyl\Mongo\Extension;
 
-use Vainyl\Core\Extension\AbstractExtension;
+use Vainyl\Core\Extension\AbstractFrameworkExtension;
 
 /**
  * Class MongoExtension
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class MongoExtension extends AbstractExtension
+class MongoExtension extends AbstractFrameworkExtension
 {
     /**
      * @inheritDoc
