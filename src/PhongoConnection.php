@@ -49,6 +49,7 @@ class PhongoConnection extends AbstractConnection
         string $database,
         array $options = []
     ) {
+        $this->hosts = $hosts;
         $this->user = $user;
         $this->password = $password;
         $this->database = $database;
