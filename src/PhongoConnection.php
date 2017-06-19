@@ -30,7 +30,9 @@ class PhongoConnection extends AbstractConnection
 
     private $database;
 
-    private $options;
+    private $uriOptions;
+
+    private $driverOptions;
 
     /**
      * PhongoConnection constructor.
@@ -39,7 +41,8 @@ class PhongoConnection extends AbstractConnection
      * @param string $user
      * @param string $password
      * @param string $database
-     * @param array  $options
+     * @param array  $uriOptions
+     * @param array  $driverOptions
      */
     public function __construct(
         string $name,
@@ -47,13 +50,15 @@ class PhongoConnection extends AbstractConnection
         string $user,
         string $password,
         string $database,
-        array $options = []
+        array $uriOptions = [],
+        array $driverOptions = []
     ) {
         $this->hosts = $hosts;
         $this->user = $user;
         $this->password = $password;
         $this->database = $database;
-        $this->options = $options;
+        $this->uriOptions = $uriOptions;
+        $this->driverOptions = $driverOptions;
         parent::__construct($name);
     }
 
@@ -81,6 +86,6 @@ class PhongoConnection extends AbstractConnection
     {
         $dsn = sprintf('mongodb://%s:%s@%s/', $this->user, $this->password, $this->getConnectionString());
 
-        return (new MongoClient($dsn, $this->options, []));
+        return new MongoClient($dsn, $this->uriOptions, $this->driverOptions);
     }
 }
