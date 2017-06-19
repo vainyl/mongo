@@ -42,7 +42,6 @@ class PhongoConnectionFactory extends AbstractIdentifiable implements Connection
             $configData['hosts'],
             $configData['user'],
             $configData['password'],
-            $configData['database'],
             $configData['options'],
             $configData['dirverOptions']
         );

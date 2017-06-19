@@ -28,8 +28,6 @@ class PhongoConnection extends AbstractConnection
 
     private $password;
 
-    private $database;
-
     private $uriOptions;
 
     private $driverOptions;
@@ -40,7 +38,6 @@ class PhongoConnection extends AbstractConnection
      * @param string $name
      * @param string $user
      * @param string $password
-     * @param string $database
      * @param array  $uriOptions
      * @param array  $driverOptions
      */
@@ -56,7 +53,6 @@ class PhongoConnection extends AbstractConnection
         $this->hosts = $hosts;
         $this->user = $user;
         $this->password = $password;
-        $this->database = $database;
         $this->uriOptions = $uriOptions;
         $this->driverOptions = $driverOptions;
         parent::__construct($name);
