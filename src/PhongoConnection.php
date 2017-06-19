@@ -8,12 +8,12 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  * @link      https://vainyl.com
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vainyl\Mongo;
 
-use Vainyl\Connection\AbstractConnection;
 use MongoDB\Client as MongoClient;
+use Vainyl\Connection\AbstractConnection;
 
 /**
  * Class PhongoConnection
@@ -22,74 +22,64 @@ use MongoDB\Client as MongoClient;
  */
 class PhongoConnection extends AbstractConnection
 {
+    private $hosts;
+
+    private $user;
+
+    private $password;
+
+    private $database;
+
+    private $options;
 
     /**
-     * @param array $config
+     * PhongoConnection constructor.
      *
-     * @return string
+     * @param string $name
+     * @param string $user
+     * @param string $password
+     * @param string $database
+     * @param array  $options
      */
-    protected function getPassword(array $config) : string
-    {
-        if (false === array_key_exists('password', $config)) {
-            return '';
-        }
-
-        $password = $config['password'];
-
-        if (false === array_key_exists('algo', $config)) {
-            return $password;
-        }
-
-        return hash($config['algo'], $password);
+    public function __construct(
+        string $name,
+        array $hosts,
+        string $user,
+        string $password,
+        string $database,
+        array $options = []
+    ) {
+        $this->user = $user;
+        $this->password = $password;
+        $this->database = $database;
+        $this->options = $options;
+        parent::__construct($name);
     }
 
     /**
-     * @param array $config
-     *
-     * @return array
+     * @return string
      */
-    protected function getCredentials(array $config) : array
+    protected function getConnectionString(): string
     {
-        $hostsConfig = $config['hosts'];
         $connectionStrings = [];
-        foreach ($hostsConfig as $hostConfig) {
+        foreach ($this->hosts as $host) {
             $port = 27017;
-            if (false !== array_key_exists('port', $hostConfig)) {
-                $port = $hostConfig['port'];
+            if (false !== array_key_exists('port', $host)) {
+                $port = $host['port'];
             }
-            $connectionStrings[] = sprintf('%s:%d', $hostConfig['host'], $port);
-        }
-        $connectionString = implode(',', $connectionStrings);
-
-        $options = [];
-        if (false !== array_key_exists('options', $config)) {
-            $options = $config['options'];
+            $connectionStrings[] = sprintf('%s:%d', $host['host'], $port);
         }
 
-        $driverOptions = [];
-        if (false !== array_key_exists('driverOptions', $config)) {
-            $options = $config['driverOptions'];
-        }
-
-        return [
-            $config['username'],
-            $config['password'],
-            $connectionString,
-            $config['dbname'],
-            $options,
-            $driverOptions,
-        ];
+        return implode(',', $connectionStrings);
     }
 
     /**
      * @inheritDoc
      */
-    public function establish()
+    public function doEstablish()
     {
-        list ($username, $password, $connectionString, $database, $options, $driverOptions)
-            = $this->getCredentials($this->getConfigData());
-        $dsn = sprintf('mongodb://%s:%s@%s/', $username, $password, $connectionString);
+        $dsn = sprintf('mongodb://%s:%s@%s/', $this->user, $this->password, $this->getConnectionString());
 
-        return (new MongoClient($dsn, $options, $driverOptions))->selectDatabase($database);
+        return (new MongoClient($dsn, $this->options, []));
     }
 }

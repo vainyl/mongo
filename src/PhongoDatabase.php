@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Vainyl\Mongo;
 
 use MongoDB\Database;
-use MongoDB\Driver\Manager as MongoDBDriverManager;
 use Vainyl\Database\CursorInterface;
 use Vainyl\Database\DatabaseInterface;
 
@@ -32,10 +31,10 @@ class PhongoDatabase extends Database implements DatabaseInterface
      * @param string $name
      * @param PhongoConnection $connection
      */
-    public function __construct(string $name, PhongoConnection $connection, MongoDBDriverManager $manager)
+    public function __construct(string $name, PhongoConnection $connection)
     {
         $this->connection = $connection;
-        parent::__construct($manager, $name);
+        parent::__construct($connection->establish()->getManager(), $name);
     }
 
     /**

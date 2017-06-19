@@ -8,10 +8,13 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  * @link      https://vainyl.com
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vainyl\Mongo\Factory;
 
+use Vainyl\Connection\ConnectionInterface;
+use Vainyl\Connection\Factory\ConnectionFactoryInterface;
+use Vainyl\Core\AbstractIdentifiable;
 use Vainyl\Mongo\PhongoConnection;
 
 /**
@@ -19,24 +22,28 @@ use Vainyl\Mongo\PhongoConnection;
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PhongoConnectionFactory
+class PhongoConnectionFactory extends AbstractIdentifiable implements ConnectionFactoryInterface
 {
     /**
      * @inheritDoc
      */
-    public function getName() : string
+    public function getName(): string
     {
         return 'phongo';
     }
 
     /**
-     * @param string $name
-     * @param array  $configData
-     *
-     * @return PhongoConnection
+     * @inheritDoc
      */
-    public function createConnection(string $name, array $configData): PhongoConnection
+    public function createConnection(string $name, array $configData): ConnectionInterface
     {
-        return new PhongoConnection($name, $configData);
+        return new PhongoConnection(
+            $name,
+            $configData['hosts'],
+            $configData['user'],
+            $configData['password'],
+            $configData['database'],
+            $configData['options']
+        );
     }
 }
