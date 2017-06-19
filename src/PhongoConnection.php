@@ -46,7 +46,6 @@ class PhongoConnection extends AbstractConnection
         array $hosts,
         string $user,
         string $password,
-        string $database,
         array $uriOptions = [],
         array $driverOptions = []
     ) {
