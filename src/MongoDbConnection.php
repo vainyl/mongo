@@ -16,11 +16,11 @@ use MongoDB\Client as MongoClient;
 use Vainyl\Connection\AbstractConnection;
 
 /**
- * Class PhongoConnection
+ * Class MongoDbConnection
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PhongoConnection extends AbstractConnection
+class MongoDbConnection extends AbstractConnection
 {
     private $hosts;
 
@@ -33,7 +33,7 @@ class PhongoConnection extends AbstractConnection
     private $driverOptions;
 
     /**
-     * PhongoConnection constructor.
+     * MongoDbConnection constructor.
      *
      * @param string $name
      * @param string $user

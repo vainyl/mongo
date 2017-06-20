@@ -15,21 +15,21 @@ namespace Vainyl\Mongo\Factory;
 use Vainyl\Connection\ConnectionInterface;
 use Vainyl\Connection\Factory\ConnectionFactoryInterface;
 use Vainyl\Core\AbstractIdentifiable;
-use Vainyl\Mongo\PhongoConnection;
+use Vainyl\Mongo\MongoConnection;
 
 /**
- * Class PhongoConnectionFactory
+ * Class MongoConnectionFactory
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PhongoConnectionFactory extends AbstractIdentifiable implements ConnectionFactoryInterface
+class MongoConnectionFactory extends AbstractIdentifiable implements ConnectionFactoryInterface
 {
     /**
      * @inheritDoc
      */
     public function getName(): string
     {
-        return 'phongo';
+        return 'mongo';
     }
 
     /**
@@ -37,7 +37,7 @@ class PhongoConnectionFactory extends AbstractIdentifiable implements Connection
      */
     public function createConnection(string $name, array $configData): ConnectionInterface
     {
-        return new PhongoConnection(
+        return new MongoConnection(
             $name,
             $configData['hosts'],
             $configData['user'],

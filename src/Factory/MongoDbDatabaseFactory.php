@@ -16,19 +16,19 @@ use Vainyl\Core\AbstractIdentifiable;
 use Vainyl\Core\Storage\StorageInterface;
 use Vainyl\Database\DatabaseInterface;
 use Vainyl\Database\Factory\DatabaseFactoryInterface;
-use Vainyl\Mongo\PhongoDatabase;
+use Vainyl\Mongo\MongoDbDatabase;
 
 /**
- * Class PhongoDatabaseFactory
+ * Class MongoDbDatabaseFactory
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PhongoDatabaseFactory extends AbstractIdentifiable implements DatabaseFactoryInterface
+class MongoDbDatabaseFactory extends AbstractIdentifiable implements DatabaseFactoryInterface
 {
     private $connectionStorage;
 
     /**
-     * PdoDatabaseFactory constructor.
+     * MongoDbDatabaseFactory constructor.
      *
      * @param StorageInterface $connectionStorage
      */
@@ -49,6 +49,6 @@ class PhongoDatabaseFactory extends AbstractIdentifiable implements DatabaseFact
         string $connectionName,
         array $options = []
     ): DatabaseInterface {
-        return new PhongoDatabase($databaseName, $this->connectionStorage[$connectionName]);
+        return new MongoDbDatabase($databaseName, $this->connectionStorage[$connectionName]);
     }
 }

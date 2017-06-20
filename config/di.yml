@@ -1,6 +1,11 @@
 services:
-  connection.factory.phongo:
-    class: Vainyl\Mongo\Factory\PhongoConnectionFactory
-  database.factory.phongo:
-    class: Vainyl\Mongo\Factory\PhongoDatabaseFactory
+  connection.factory.mongodb:
+    class: Vainyl\Mongo\Factory\MongoDbConnectionFactory
+  database.factory.mongodb:
+    class: Vainyl\Mongo\Factory\MongoDbDatabaseFactory
+    arguments: ['@connection.storage']
+  connection.factory.mongo:
+    class: Vainyl\Mongo\Factory\MongoConnectionFactory
+  database.factory.mongo:
+    class: Vainyl\Mongo\Factory\MongoDatabaseFactory
     arguments: ['@connection.storage']
