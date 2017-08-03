@@ -27,7 +27,7 @@ class MongoDatabase extends \MongoDB implements DatabaseInterface
     /**
      * MongoDatabase constructor.
      *
-     * @param string            $name
+     * @param string          $name
      * @param MongoConnection $connection
      */
     public function __construct(string $name, MongoConnection $connection)
