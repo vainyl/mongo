@@ -38,6 +38,16 @@ class MongoDbDatabase extends Database implements DatabaseInterface
     }
 
     /**
+     * @param MongoDbDatabase $obj
+     *
+     * @return bool
+     */
+    public function equals($obj): bool
+    {
+        return $this->getId() === $obj->getId();
+    }
+
+    /**
      * @inheritDoc
      */
     public function getId(): string
@@ -51,6 +61,14 @@ class MongoDbDatabase extends Database implements DatabaseInterface
     public function getName(): string
     {
         return $this->getDatabaseName();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hash()
+    {
+        return $this->getId();
     }
 
     /**

@@ -55,8 +55,26 @@ class MongoDatabase extends \MongoDB implements DatabaseInterface
     /**
      * @inheritDoc
      */
+    public function hash()
+    {
+        return $this->getId();
+    }
+
+    /**
+     * @param MongoDatabase $obj
+     *
+     * @return bool
+     */
+    public  function equals($obj): bool
+    {
+        return $this->getId() === $obj->getId();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function runQuery($query, array $bindParams = [], array $bindTypes = []): CursorInterface
     {
-        return $this->command($query);
+        return new MongoCursor($this->command($query));
     }
 }
